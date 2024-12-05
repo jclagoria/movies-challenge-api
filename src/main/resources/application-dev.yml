@@ -1,0 +1,15 @@
+movie:
+  endpoint:
+    url: 'https://eron-movies.wiremockapi.cloud/api/movies'
+
+configuration:
+  process:
+    movies: 100
+
+api:
+  concurrency:
+    limit: 10
+
+cache:
+  expiry:
+    minutes: 3
