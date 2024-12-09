@@ -31,7 +31,11 @@ public class MovieController {
     @Operation(summary = "Fetch Directors", description = "Fetch directors with movies exceeding the given threshold")
     public Mono<ResponseEntity<DirectorsResponse>> getDirectors(
             @Parameter(description = "Threshold for filtering directors by movie count")
-            @RequestParam @Min(1) int threshold) {
+            @RequestParam int threshold) {
+
+        if (threshold <= 0) {
+            return Mono.error(new IllegalArgumentException("Threshold must be greater than zero"));
+        }
 
         return movieInfoService
                 .getDirectors(threshold)
