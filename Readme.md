@@ -45,7 +45,7 @@ The application uses the following dependencies:
     mvn spring-boot:run
    ```
 4. Access the Application: 
-   - Swagger UI: http://localhost:8080/swagger-ui.html
+   - Swagger UI: http://localhost:8080/swagger-ui.html or http://localhost:8080/webjars/swagger-ui/index.html
 
 ### API EndPoints
 #### Fetch Directors

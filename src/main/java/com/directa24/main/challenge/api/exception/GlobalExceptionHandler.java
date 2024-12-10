@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ServerWebInputException;
 
 @RestControllerAdvice
 @Slf4j
@@ -53,5 +54,13 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse("Internal Server Error", "An unexpected error occurred."));
     }
 
+    @ExceptionHandler(ServerWebInputException.class)
+    public ResponseEntity<ErrorResponse> handleServerWebInputException(ServerWebInputException ex) {
+        log.error("Unexpected exception: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("Parameter error", ex.getCause()
+                        != null ? ex.getCause().getLocalizedMessage() : ex.getReason()));
+    }
 
 }

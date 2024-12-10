@@ -80,4 +80,39 @@ class MovieControllerTest {
                 .jsonPath("$.message").isEqualTo("Threshold must be greater than zero");
     }
 
+    @Test
+    @DisplayName("Test GetDirector, Threshold is not present")
+    void testGetDirectors_ThresholdNotPresent() {
+        // Act & Assert
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/movies/directors")
+                        .queryParam("threshold") // Invalid threshold
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("$.error").isEqualTo("Parameter error")
+                .jsonPath("$.message").isEqualTo("Required int parameter 'threshold' is not present");
+    }
+
+    @Test
+    @DisplayName("Test GetDirector, Threshold is not a number")
+    void testGetDirectors_ThresholdIsNotANumber() {
+        // Act & Assert
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/movies/directors")
+                        .queryParam("threshold", "a") // Invalid threshold
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("$.error").isEqualTo("Parameter error")
+                .jsonPath("$.message")
+                    .isEqualTo("Failed to convert value of type 'java.lang.String' to required type 'int'; nested exception is java.lang.NumberFormatException: For input string: \"a\"");
+    }
+
 }

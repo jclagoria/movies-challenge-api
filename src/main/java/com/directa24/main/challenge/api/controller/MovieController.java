@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import javax.validation.constraints.Min;
-
 @RestController
 @RequestMapping("/api/v1/movies")
 @Tag(name = "Movie Controller", description = "Endpoints related to Movies and Directors")
